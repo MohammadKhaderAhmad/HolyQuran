@@ -101,6 +101,10 @@ public class SignUpActivity extends AppCompatActivity {
             edtSignUpEmail.setError("Please, fill out this field");
             isValid = false;
         }
+        else if (!email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
+            edtSignUpEmail.setError("Please enter a valid email");
+            isValid = false;
+        }
         if (mobile.isEmpty()) {
             edtSignUpMobile.setError("Please, fill out this field");
             isValid = false;
@@ -112,7 +116,22 @@ public class SignUpActivity extends AppCompatActivity {
         if (coPassword.isEmpty()) {
             edtSignUpConfirmPassword.setError("Please, fill out this field");
             isValid = false;
-        } else if (!password.equals(coPassword)) {
+        }
+        // check if passowrd contain at least 5 characters and (1 character and 1 number and 1 special character)
+        else if (password.length() < 5) {
+            edtSignUpPassword.setError("Password must contain at least 5 characters");
+            isValid = false;
+        } else if (!password.matches(".*[a-zA-Z]+.*")) {
+            edtSignUpPassword.setError("Password must contain at least 1 character");
+            isValid = false;
+        } else if (!password.matches(".*[0-9]+.*")) {
+            edtSignUpPassword.setError("Password must contain at least 1 number");
+            isValid = false;
+        } else if (!password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};'\\\\|,.<>\\/?]+.*")) {
+            edtSignUpPassword.setError("Password must contain at least 1 special character");
+        isValid = false;
+    }
+        else if (!password.equals(coPassword)) {
             edtSignUpConfirmPassword.setError("Passwords do not match");
             isValid = false;
         }
